@@ -1,0 +1,104 @@
+pipeline {
+    agent any
+    stages { 
+        stage('Estructuras de control (IF)') {
+            steps {
+                script {
+                    def condicion 
+
+                    condicion = input(
+                        id: 'condicionInput',
+                        message: 'Seleccione una opción',
+                        parameters: [
+                            choice(name: 'Desplegar', choices: ['Si', 'No'], description: 'Se debe desplegar?')
+                        ]
+                        )
+                    
+                    if (condicion.equals('Si')) {
+                        echo "Ejecuto acciones para desplegar"
+                    } else {
+                        echo "Ejecuto acciones para no desplegar (puede ser establecer una condición para que no se ejecute siguiente fase)"
+                    }
+                }
+            }
+        }
+
+        stage ('Estructuras de control (SWITCH)') {
+            steps {
+
+                script {
+                    def entorno
+
+                    entorno = input(
+                        message: "Indique el entorno",
+                        parameters: [string(name: 'entorno', defaultValue: 'PRODUCCION', description: 'Entorno donde se realizarán las acciones')]
+                    )
+                
+                    switch (entorno) {
+                        case 'PRODUCCION':
+                            echo "Entorno producción"
+                        break
+                        case 'PREPRODUCCION':
+                            echo "Entorno de preproducción"
+                        break
+                        case 'DESARROLLO':
+                            echo "Entorno de desarrollo"
+                        break
+                        default:
+                            echo "Entorno no reconocido"
+                        break
+
+                    }
+                }
+            }
+        }
+
+        stage ('Estructuras de control (FOR)') {
+            steps {
+                script {
+
+                    def servidores
+
+                    //ExtendedChoiceParameterDefinition: Se necesita instalar el plugin Extended Choice Parameter
+                    servidores = input(
+                        id: 'multiSelectInput',
+                        message: 'Select multiple values',
+                        parameters: [
+                            [
+                                $class: 'ExtendedChoiceParameterDefinition',
+                                name: 'Servidor',
+                                description: 'Seleccione los servidores',
+                                multiSelectDelimiter: ',',
+                                type: 'PT_MULTI_SELECT',
+                                value: 'tomcat1,tomcat2,tomcat3'
+                            ]
+                        ]
+                    ).split(',')
+
+                    // Iterar por cada servicio seleccionado
+                    for (def servidor in servidores) {
+                        echo "Realizar despliegue en : ${servidor}"
+                        // Acciones que se realizarían para desplegar
+                        // ...
+
+                    }
+                }   
+            }
+        }
+
+        stage('Estructuras de control (WHILE)') {
+            steps {
+                script {
+                     def contador = 0
+
+                    while (contador < 5) {
+                        echo "Iteración ${contador}"
+                        // Realizar acciones dentro del bucle
+
+                        contador++  
+                    }
+                }
+            }
+        }
+    }
+}

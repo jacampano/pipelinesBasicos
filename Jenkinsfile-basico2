@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    environment {
+        VARIABLE="valor"
+    }
+    stages {
+        stage('Ejemplo variables usuario / password') {
+            environment {
+                SERVICE_CREDS = credentials('robot')
+            }
+            steps {
+                sh 'echo "Usuario $SERVICE_CREDS_USR"'
+                sh 'echo "Password $SERVICE_CREDS_PSW"'
+                sh 'printenv'                
+            }
+        }
+        stage('Secret text') {
+            environment {
+                SECRET = credentials('SonarToken')
+            }
+            steps {
+                sh 'echo "SECRET: $SECRET"'
+                sh 'printenv' 
+            }
+        }
+    }
+}

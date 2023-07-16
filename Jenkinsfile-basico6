@@ -1,0 +1,37 @@
+def ejecutar = true
+pipeline {
+    agent any
+    stages { 
+        stage('Siempre me ejecuto') {
+            steps {
+                echo 'Esta fase siempre se ejecuta'
+            }
+        }
+
+        stage('Me ejecuto según condición') {
+            when {
+                expression {
+                    ejecutar == true
+                }
+            }
+            steps {
+                echo 'Esta fase se ejecuta según un valor booleano'
+                script {
+                    ejecutar = !ejecutar
+                }
+               
+            }
+        }
+        stage('No me ejecuto según condición') {
+            when {
+                expression {
+                    ejecutar == true
+                }
+            }
+            steps {
+                echo 'Esta fase se ejecuta según un valor booleano'
+            }
+        }
+
+    }
+}

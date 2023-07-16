@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    stages { 
+        stage('Variable1') {
+            steps {
+                script {
+                    withEnv(['VARIABLE=Hola mundo','VARIABLE2=Adios Mundo']) {
+                        sh 'printenv'
+                    }     
+
+                }
+            }
+        }
+        stage('Variable2') {
+            steps {
+                script {
+                    def mavenTool = 'Maven-3.8.6' // Nombre de la herramienta configurada en Jenkins
+                    def versionJDK = 'JDK11'
+                    withEnv(["JAVA_HOME=${ tool versionJDK}"]) {
+                        withMaven(maven: mavenTool) {
+                            sh 'mvn -version'
+                        }
+                    }
+
+                    mavenTool = 'Maven2'
+                    versionJDK = 'JDK17'
+                    withEnv(["JAVA_HOME=${ tool versionJDK}"]) {
+                        withMaven(maven: mavenTool) {
+                            sh 'mvn -version'
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+}
