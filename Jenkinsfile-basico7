@@ -23,7 +23,7 @@ pipeline {
                     }
 
                     mavenTool = 'Maven2'
-                    versionJDK = 'OpenJDK 15.0.2'
+                    versionJDK = 'JDK11'
                     withEnv(["JAVA_HOME=${ tool versionJDK}"]) {
                         withMaven(maven: mavenTool) {
                             sh 'mvn -version'
