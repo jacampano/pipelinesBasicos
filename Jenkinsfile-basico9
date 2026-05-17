@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    stages {
+        stage('Preparar') {
+            steps {
+                echo 'Preparando el trabajo'
+            }
+        }
+
+        stage('Ejecutar') {
+            steps {
+                echo 'Ejecutando acciones principales'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Este bloque se ejecuta siempre'
+        }
+        success {
+            echo 'El pipeline ha terminado correctamente'
+        }
+        failure {
+            echo 'El pipeline ha fallado'
+        }
+        cleanup {
+            echo 'Limpieza final del espacio de trabajo'
+        }
+    }
+}

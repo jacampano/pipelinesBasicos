@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    stages {
+        stage('Generar fichero') {
+            steps {
+                sh 'mkdir -p salida'
+                sh 'echo "Resultado generado por Jenkins" > salida/resultado.txt'
+                stash name: 'resultado', includes: 'salida/resultado.txt'
+            }
+        }
+
+        stage('Usar fichero en otra fase') {
+            steps {
+                deleteDir()
+                unstash 'resultado'
+                sh 'cat salida/resultado.txt'
+            }
+        }
+
+        stage('Publicar artefacto') {
+            steps {
+                archiveArtifacts artifacts: 'salida/resultado.txt', fingerprint: true
+            }
+        }
+    }
+}

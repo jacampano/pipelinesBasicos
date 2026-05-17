@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    stages {
+        stage('Compilar') {
+            steps {
+                echo 'Compilando la aplicación'
+            }
+        }
+
+        stage('Pruebas en paralelo') {
+            parallel {
+                stage('Pruebas unitarias') {
+                    steps {
+                        echo 'Ejecutando pruebas unitarias'
+                        sh 'sleep 2'
+                    }
+                }
+
+                stage('Pruebas de integración') {
+                    steps {
+                        echo 'Ejecutando pruebas de integración'
+                        sh 'sleep 2'
+                    }
+                }
+
+                stage('Análisis estático') {
+                    steps {
+                        echo 'Ejecutando análisis estático de código'
+                        sh 'sleep 2'
+                    }
+                }
+            }
+        }
+    }
+}

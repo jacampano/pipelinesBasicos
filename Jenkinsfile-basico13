@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+    triggers {
+        cron('H/15 * * * *')
+    }
+    stages {
+        stage('Ejecucion periodica') {
+            steps {
+                echo 'Este pipeline se puede lanzar automaticamente cada 15 minutos'
+            }
+        }
+    }
+}

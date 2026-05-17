@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    options {
+        timestamps()
+        timeout(time: 10, unit: 'MINUTES')
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+    stages {
+        stage('Paso con reintentos') {
+            steps {
+                retry(3) {
+                    echo 'Intentando ejecutar un paso que podria fallar'
+                    sh 'echo "Trabajo realizado"'
+                }
+            }
+        }
+
+        stage('Paso con timeout especifico') {
+            steps {
+                timeout(time: 1, unit: 'MINUTES') {
+                    echo 'Este bloque tiene su propio limite de tiempo'
+                    sh 'sleep 5'
+                }
+            }
+        }
+    }
+}
