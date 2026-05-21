@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+    stages {
+        stage('Fase unstable') {
+            steps {
+                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                    error 'Esta fase se marca como unstable y el build continua'
+                }
+            }
+        }
+
+        stage('Fase con error') {
+            steps {
+                error 'Esta fase marca el build como error'
+            }
+        }
+    }
+}
