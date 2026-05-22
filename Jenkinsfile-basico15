@@ -3,11 +3,18 @@ pipeline {
     options {
         skipDefaultCheckout()
     }
+    parameters {
+        string(name: 'REPOSITORIO', defaultValue: 'https://github.com/jacampano/pruebasWebApp.git', description: 'Repositorio que se quiere construir')
+        string(name: 'RAMA', defaultValue: 'main', description: 'Rama que se quiere descargar')
+    }
     stages {
         stage('Checkout explicito') {
             steps {
-                echo 'Obteniendo el codigo configurado para este pipeline'
-                checkout https://github.com/jacampano/pruebasWebApp.git
+                echo "Obteniendo ${params.REPOSITORIO} en la rama ${params.RAMA}"
+                checkout scmGit(
+                    branches: [[name: params.RAMA]],
+                    userRemoteConfigs: [[url: params.REPOSITORIO]]
+                )
             }
         }
 

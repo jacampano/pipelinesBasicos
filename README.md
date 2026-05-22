@@ -68,7 +68,7 @@ Gestión del resultado de fases con `catchError` y `error`. Muestra cómo contin
 
 ### Jenkinsfile-basico15
 
-Checkout explícito del código fuente. Desactiva el checkout automático con `skipDefaultCheckout`, ejecuta `checkout scm` y consulta el repositorio desde el workspace.
+Checkout explícito de otro repositorio Git. Desactiva el checkout automático con `skipDefaultCheckout`, recibe la URL y la rama por parámetros y descarga ese código con `checkout scmGit`.
 
 ### Jenkinsfile-basico16
 
