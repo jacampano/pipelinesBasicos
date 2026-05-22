@@ -10,7 +10,7 @@ pipeline {
 
         stage('Validar en otro contexto') {
             agent {
-                label 'linux'
+                label 'worker2'
             }
             steps {
                 echo "Validando en el nodo ${env.NODE_NAME}"
