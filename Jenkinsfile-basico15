@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout explicito') {
             steps {
                 echo 'Obteniendo el codigo configurado para este pipeline'
-                checkout scm
+                checkout https://github.com/jacampano/pruebasWebApp.git
             }
         }
 
