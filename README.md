@@ -62,6 +62,34 @@ Opciones generales y control de ejecución. Incluye `timestamps`, `timeout`, con
 
 Ejecución periódica mediante `triggers`. Usa `cron` para mostrar cómo programar automáticamente un pipeline.
 
+### Jenkinsfile-basico14
+
+Gestión del resultado de fases con `catchError` y `error`. Muestra cómo continuar tras marcar una fase como inestable y cómo finalizar el build con error.
+
+### Jenkinsfile-basico15
+
+Checkout explícito del código fuente. Desactiva el checkout automático con `skipDefaultCheckout`, ejecuta `checkout scm` y consulta el repositorio desde el workspace.
+
+### Jenkinsfile-basico16
+
+Trabajo con el workspace. Usa `pwd`, `dir`, `writeFile`, `fileExists` y `readFile` para crear y leer ficheros desde directorios del pipeline.
+
+### Jenkinsfile-basico17
+
+Publicación de resultados de pruebas con `junit`. Genera un informe XML sencillo y lo registra en Jenkins para que aparezca en el historial del build.
+
+### Jenkinsfile-basico18
+
+Asignación de agentes por fase. Parte de `agent none` y selecciona agentes distintos para preparar y validar el trabajo.
+
+### Jenkinsfile-basico19
+
+Ejecución de combinaciones con `matrix`. Define ejes para JDK y sistema, excluye una combinación y ejecuta la misma validación para las restantes.
+
+### Jenkinsfile-basico20
+
+Orquestación entre jobs con `build`. Recibe el nombre de un job hijo por parámetro y permite lanzarlo desde otro pipeline pasando información de origen.
+
 ## ¿Cómo utilizar este repositorio?
 
 1. Clona este repositorio en tu máquina local utilizando el siguiente comando:

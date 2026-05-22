@@ -1,0 +1,21 @@
+pipeline {
+    agent none
+    stages {
+        stage('Preparar en un agente') {
+            agent any
+            steps {
+                echo "Preparando en el nodo ${env.NODE_NAME}"
+            }
+        }
+
+        stage('Validar en otro contexto') {
+            agent {
+                label 'linux'
+            }
+            steps {
+                echo "Validando en el nodo ${env.NODE_NAME}"
+                sh 'uname -a'
+            }
+        }
+    }
+}

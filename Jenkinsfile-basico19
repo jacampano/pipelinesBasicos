@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    stages {
+        stage('Validaciones por combinacion') {
+            matrix {
+                axes {
+                    axis {
+                        name 'JDK'
+                        values '11', '17'
+                    }
+                    axis {
+                        name 'SISTEMA'
+                        values 'linux', 'windows'
+                    }
+                }
+                excludes {
+                    exclude {
+                        axis {
+                            name 'JDK'
+                            values '11'
+                        }
+                        axis {
+                            name 'SISTEMA'
+                            values 'windows'
+                        }
+                    }
+                }
+                stages {
+                    stage('Mostrar combinacion') {
+                        steps {
+                            echo "Validando con JDK ${JDK} en ${SISTEMA}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

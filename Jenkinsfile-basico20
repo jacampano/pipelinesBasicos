@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    parameters {
+        booleanParam(name: 'LANZAR_PIPELINE_HIJO', defaultValue: false, description: 'Lanza otro job de Jenkins')
+        string(name: 'JOB_HIJO', defaultValue: 'pipeline-hijo', description: 'Nombre del job que se quiere ejecutar')
+    }
+    stages {
+        stage('Preparar orquestacion') {
+            steps {
+                echo "Job hijo configurado: ${params.JOB_HIJO}"
+            }
+        }
+
+        stage('Lanzar otro pipeline') {
+            when {
+                expression {
+                    params.LANZAR_PIPELINE_HIJO
+                }
+            }
+            steps {
+                build job: params.JOB_HIJO,
+                    wait: true,
+                    propagate: true,
+                    parameters: [
+                        string(name: 'ORIGEN', value: env.JOB_NAME)
+                    ]
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    stages {
+        stage('Preparar directorio') {
+            steps {
+                echo "Workspace principal: ${pwd()}"
+                dir('salida') {
+                    writeFile file: 'resumen.txt', text: 'Fichero creado desde el pipeline'
+                    echo "Directorio de trabajo actual: ${pwd()}"
+                }
+            }
+        }
+
+        stage('Leer fichero') {
+            steps {
+                script {
+                    if (fileExists('salida/resumen.txt')) {
+                        def contenido = readFile('salida/resumen.txt').trim()
+                        echo "Contenido leido: ${contenido}"
+                    } else {
+                        error 'No se ha encontrado el fichero esperado'
+                    }
+                }
+            }
+        }
+    }
+}

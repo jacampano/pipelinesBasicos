@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    options {
+        skipDefaultCheckout()
+    }
+    stages {
+        stage('Checkout explicito') {
+            steps {
+                echo 'Obteniendo el codigo configurado para este pipeline'
+                checkout scm
+            }
+        }
+
+        stage('Inspeccionar repositorio') {
+            steps {
+                sh 'git rev-parse --short HEAD'
+                sh 'ls -1'
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+    stages {
+        stage('Generar resultado de pruebas') {
+            steps {
+                sh 'mkdir -p target/surefire-reports'
+                writeFile file: 'target/surefire-reports/TEST-ejemplo.xml', text: '''<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="curso.jenkins.EjemploTest" tests="2" failures="0" errors="0" skipped="0">
+    <testcase classname="curso.jenkins.EjemploTest" name="pipelineGeneraResultados"/>
+    <testcase classname="curso.jenkins.EjemploTest" name="jenkinsPublicaResultados"/>
+</testsuite>
+'''
+            }
+        }
+
+        stage('Publicar pruebas') {
+            steps {
+                junit testResults: 'target/surefire-reports/*.xml'
+            }
+        }
+    }
+}
